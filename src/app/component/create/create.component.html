@@ -1,0 +1,73 @@
+<div class="createPoll">
+  <h1>Create A Poll</h1>
+  <h3>Fill out poll details</h3>
+  <mat-card>
+    <mat-horizontal-stepper [linear]=isLinear #stepper>
+      <mat-step [stepControl]=firstFormGroup>
+        <form [formGroup]=firstFormGroup>
+          <ng-template matStepLabel>Basic Details</ng-template>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name" required>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Description" formControlName="description" required></textarea>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]=secondFormGroup>
+        <form [formGroup]=secondFormGroup>
+          <ng-template matStepLabel>Metrics</ng-template>
+          <mat-form-field>
+            <mat-label>Candidate 1</mat-label>
+            <input matInput placeholder="Candidate 1" formControlName="candidate1" required>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <mat-label>Candidate 2</mat-label>
+            <input matInput placeholder="Candidate 2" formControlName="candidate2" required>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <mat-label>Duration</mat-label>
+            <mat-date-range-input [formGroup]=secondFormGroup [rangePicker]=campaignOnePicker
+              [comparisonStart]=secondFormGroup.value.start [comparisonEnd]=secondFormGroup.value.end>
+              <input matStartDate placeholder="Start date" formControlName="start">
+              <input matEndDate placeholder="End date" formControlName="end">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]=campaignOnePicker></mat-datepicker-toggle>
+            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+          </mat-form-field>
+          <br />
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Submit</ng-template>
+        <p>Summary</p>
+        <mat-list>
+          <mat-list-item> <strong>Name:</strong> {{ this.firstFormGroup.value.name }}</mat-list-item>
+          <mat-list-item> <strong>Description:</strong> {{ this.firstFormGroup.value.description }}</mat-list-item>
+          <mat-list-item> <strong>Candidate 1:</strong> {{ this.secondFormGroup.value.candidate1 }}</mat-list-item>
+          <mat-list-item> <strong>Candidate 2:</strong> {{ this.secondFormGroup.value.candidate2 }}</mat-list-item>
+          <mat-list-item> <strong>Poll Duration:</strong> {{ this.secondFormGroup.value.start }} - {{ this.secondFormGroup.value.end }}</mat-list-item>
+        </mat-list>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)=stepper.reset()>Reset</button>
+          <button mat-button (click)=submit()>Submit</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+  </mat-card>
+
+</div>

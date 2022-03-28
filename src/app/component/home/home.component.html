@@ -1,0 +1,18 @@
+<div class="home">
+  <mat-card>
+    <div class="homeAction">
+      <mat-card-title>Recent Polls</mat-card-title>
+      <div>
+        <a routerLink="/create">
+          <button mat-raised-button class="homeButton" class="homeCreatePoll">Create Poll</button>
+        </a>
+        <a routerLink="/monitor">
+          <button mat-raised-button class="homeButton" class="homeViewPoll">View Poll</button>
+        </a>
+      </div>
+    </div>
+  </mat-card>
+  <amdg-grid [headings]=headings [url]=url [serverSidePagination]=true (responseEmit)=responseReceived($event)
+    [selection]=true>
+  </amdg-grid>
+</div>

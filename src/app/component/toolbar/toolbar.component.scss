@@ -1,0 +1,28 @@
+.nav {
+  background-color: white;
+  height: 100px;
+}
+
+.navContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navDetails {
+  display: flex;
+  text-align: center;
+}
+
+.navToggle {
+  margin-left: 30px;
+}
+
+.user {
+  font-size: 35px;
+}
+
+.env {
+  margin-left: 20px;
+  background-color: #663399;
+  color: white;
+}

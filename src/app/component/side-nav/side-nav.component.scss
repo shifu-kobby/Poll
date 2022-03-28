@@ -1,0 +1,33 @@
+.sideNav {
+  width: 220px;
+  height: 600px;
+}
+
+.sideNavLogo {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style-type: none;
+  margin-left: 20px;
+}
+
+li {
+  margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+mat-card {
+  width: 150px;
+  text-align: center;
+  display: flex;
+  text-align: center;
+}
