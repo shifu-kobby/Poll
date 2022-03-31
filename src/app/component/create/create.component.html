@@ -13,7 +13,7 @@
           <br />
           <mat-form-field>
             <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" formControlName="description" required></textarea>
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
           </mat-form-field>
           <div>
             <button mat-button matStepperNext>Next</button>
@@ -23,15 +23,21 @@
       <mat-step [stepControl]=secondFormGroup>
         <form [formGroup]=secondFormGroup>
           <ng-template matStepLabel>Metrics</ng-template>
-          <mat-form-field>
-            <mat-label>Candidate 1</mat-label>
-            <input matInput placeholder="Candidate 1" formControlName="candidate1" required>
-          </mat-form-field>
+          <div formArrayName="candidates">
+            Candidates
+            <div *ngFor='let candidate of candidates().controls;let i=index' [formGroupName]=i>
+              <mat-form-field>
+                <input matInput placeholder="Candidate" formControlName="candidate" required>
+              </mat-form-field>
+              <a (click)=removeCandidate(i)>
+                <mat-icon>remove</mat-icon>
+              </a>
+            </div>
+          </div>
+          <a (click)=addCandidate()>
+            <mat-icon>add</mat-icon>
+          </a>
           <br />
-          <mat-form-field>
-            <mat-label>Candidate 2</mat-label>
-            <input matInput placeholder="Candidate 2" formControlName="candidate2" required>
-          </mat-form-field>
           <br />
           <mat-form-field>
             <mat-label>Duration</mat-label>
@@ -56,9 +62,14 @@
         <mat-list>
           <mat-list-item> <strong>Name:</strong> {{ this.firstFormGroup.value.name }}</mat-list-item>
           <mat-list-item> <strong>Description:</strong> {{ this.firstFormGroup.value.description }}</mat-list-item>
-          <mat-list-item> <strong>Candidate 1:</strong> {{ this.secondFormGroup.value.candidate1 }}</mat-list-item>
-          <mat-list-item> <strong>Candidate 2:</strong> {{ this.secondFormGroup.value.candidate2 }}</mat-list-item>
-          <mat-list-item> <strong>Poll Duration:</strong> {{ this.secondFormGroup.value.start }} - {{ this.secondFormGroup.value.end }}</mat-list-item>
+          <mat-list-item>
+            <strong>Candidates:</strong>
+            <div *ngFor="let candidate of this.secondFormGroup.value.candidates">
+              {{ candidate.candidate }},&nbsp;
+            </div>
+          </mat-list-item>
+          <mat-list-item> <strong>Poll Duration:</strong> {{ this.secondFormGroup.value.start }} - {{
+            this.secondFormGroup.value.end }}</mat-list-item>
         </mat-list>
         <div>
           <button mat-button matStepperPrevious>Back</button>

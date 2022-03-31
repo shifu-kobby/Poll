@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ToolbarComponent } from './component/toolbar/toolbar.component';
 import {MatCardModule} from '@angular/material/card';
 import { AngularMaterialDataGridModule } from 'angular-material-data-grid';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormArray, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -21,6 +21,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { MonitorComponent } from './component/monitor/monitor.component';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
+import { PollComponent } from './component/poll/poll.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
     SideNavComponent,
     ToolbarComponent,
     MonitorComponent,
+    PollComponent,
   ],
   imports: [
     ChartsModule,

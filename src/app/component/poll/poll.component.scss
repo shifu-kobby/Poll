@@ -1,0 +1,20 @@
+.poll {
+  height: 600px;
+}
+
+.pollOption {
+  display: flex;
+}
+
+mat-card:hover {
+  color: hotpink;
+}
+
+mat-card:active {
+  color: blue;
+}
+
+.submitButton {
+  color: white;
+  background-color: #663399;
+}

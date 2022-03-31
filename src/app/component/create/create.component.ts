@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create',
@@ -19,15 +19,32 @@ export class CreateComponent implements OnInit {
 
     this.firstFormGroup = this._formBuilder.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['']
     });
 
     this.secondFormGroup = this._formBuilder.group({
-      candidate1: ['', Validators.required],
-      candidate2: ['', Validators.required],
+      candidates: this._formBuilder.array([]),
       start: [new Date(year, month, 1), Validators.required],
       end: [new Date(year, month, 5), Validators.required],
     });
+  }
+
+  candidates() : FormArray {
+    return this.secondFormGroup.get("candidates") as FormArray
+  }
+
+  newCandidate(): FormGroup {
+    return this._formBuilder.group({
+      candidate: ''
+    })
+  }
+
+  addCandidate() {
+    this.candidates().push(this.newCandidate());
+  }
+
+  removeCandidate(i:number) {
+    this.candidates().removeAt(i);
   }
 
   submit() {
