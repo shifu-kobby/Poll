@@ -4,17 +4,29 @@
 
 .pollOption {
   display: flex;
+  justify-content: space-evenly;
 }
 
-mat-card:hover {
-  color: hotpink;
-}
+// mat-card:hover {
+//   color: hotpink;
+// }
 
-mat-card:active {
-  color: blue;
-}
+// mat-card:active {
+//   color: blue;
+// }
 
 .submitButton {
   color: white;
   background-color: #663399;
+}
+
+::ng-deep .pollMatCard{
+  min-width: 300px;
+  max-width: 400px;
+  max-height: 100px;
+}
+
+.pollSubmitButton{
+  text-align: center;
+  margin-top: 30px;
 }
