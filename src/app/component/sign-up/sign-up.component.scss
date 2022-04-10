@@ -1,0 +1,21 @@
+.signUp {
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: center;
+}
+
+::ng-deep .signUpContent {
+  width: 400px;
+  height: 400px;
+}
+
+.signUpDetails {
+  width: 100px;
+}
+
+.signUpButton {
+  color: white;
+  background-color: #663399;
+}

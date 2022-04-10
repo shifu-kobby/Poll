@@ -1,0 +1,36 @@
+<div class="signUp">
+  <mat-card class="signUpContent">
+    <mat-card-title>Personal Information</mat-card-title>
+    <mat-card-content class="signUpDetails">
+      <form [formGroup]=signUpFormGroup>
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>User Name</mat-label>
+          <input matInput formControlName="userName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwords">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="signUpButton" (click)=signUp()>Sign Up</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

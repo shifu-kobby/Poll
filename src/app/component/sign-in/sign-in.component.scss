@@ -1,0 +1,21 @@
+.signIn {
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: center;
+}
+
+::ng-deep .signInContent {
+  width: 400px;
+  height: 300px;
+}
+
+.signInDetails {
+  width: 100px;
+}
+
+.signInButton {
+  color: white;
+  background-color: #663399;
+}

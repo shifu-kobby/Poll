@@ -4,12 +4,16 @@ import { CreateComponent } from './component/create/create.component';
 import { HomeComponent } from './component/home/home.component';
 import { MonitorComponent } from './component/monitor/monitor.component';
 import { PollComponent } from './component/poll/poll.component';
+import { SignInComponent } from './component/sign-in/sign-in.component';
+import { SignUpComponent } from './component/sign-up/sign-up.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: SignInComponent},
+  {path: 'sign-up', component: SignUpComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'create', component: CreateComponent},
   {path: 'monitor', component: MonitorComponent},
-  {path: 'poll', component: PollComponent}
+  {path: 'poll', component: PollComponent},
 ];
 
 @NgModule({

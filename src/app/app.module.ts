@@ -24,6 +24,8 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { PollComponent } from './component/poll/poll.component';
 import {MatTableModule} from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SignUpComponent } from './component/sign-up/sign-up.component';
+import { SignInComponent } from './component/sign-in/sign-in.component';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ToolbarComponent,
     MonitorComponent,
     PollComponent,
+    SignUpComponent,
+    SignInComponent,
   ],
   imports: [
     MatCheckboxModule,

@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs';
+import { User, Poll } from '../model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,15 @@ export class PollServiceService {
 
   baseUrl = "http://localhost:8080/api";
 
-  getPolls(): any {
-    return this.http.get<any>(`${this.baseUrl}/poll`);
+  getPolls() {
+    return this.http.get<Poll[]>(`${this.baseUrl}/poll`);
+  }
+
+  userSignUp(data: User) {
+    return this.http.post<Poll>(`${this.baseUrl}/user`, data);
+  }
+
+  getUserById(email: string, passwords: string){
+    return this.http.get<User>(`${this.baseUrl}/user/${email}/${passwords}`);
   }
 }

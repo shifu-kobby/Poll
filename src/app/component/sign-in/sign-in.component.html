@@ -1,0 +1,24 @@
+<div class="signIn">
+  <mat-card class="signInContent">
+    <mat-card-title>Personal Information</mat-card-title>
+    <mat-card-content class="signInDetails">
+      <form [formGroup]=signInFormGroup>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwords">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="signInButton" (click)=login()>Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
