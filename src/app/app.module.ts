@@ -22,6 +22,8 @@ import { MonitorComponent } from './component/monitor/monitor.component';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { PollComponent } from './component/poll/poll.component';
+import {MatTableModule} from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import { PollComponent } from './component/poll/poll.component';
     PollComponent,
   ],
   imports: [
+    MatCheckboxModule,
+    MatTableModule,
     ChartsModule,
     WavesModule,
     NgChartsModule,

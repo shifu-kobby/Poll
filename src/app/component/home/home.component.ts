@@ -1,5 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { GridHeading, GridResponse } from 'angular-material-data-grid';
+import { PollServiceService } from 'src/app/service/poll-service.service';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
+import { Poll } from 'src/app/model';
+
+
+const ELEMENT_DATA: Poll[] = [
+  {
+    pollId: 1,
+    pollName: "name",
+    pollDescription: "description",
+    pollStatus: "status",
+    startDate: "start",
+    endDate: "end",
+    userId: {
+      userId: 1,
+      email: "user1@email.com",
+      firstName: "firstName",
+      lastName: "lastName",
+      passwords: "password",
+      polls: [1],
+      userName: "userName"
+    }
+  },
+];
+
 
 @Component({
   selector: 'app-home',
@@ -8,35 +33,47 @@ import { GridHeading, GridResponse } from 'angular-material-data-grid';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private pollService: PollServiceService) { }
+  polls: Poll[] | undefined;
+  selection: any;
+  dataSource: any;
+  displayedColumns: string[] | undefined;
 
   ngOnInit(): void {
+    this.pollService.getPolls()
+      .subscribe((data: any) => {
+        console.log(data);
+        this.polls = data;
+        this.dataSource = new MatTableDataSource<Poll>(this.polls);
+      })
+
+    this.displayedColumns = ['select', 'id', 'name', 'description', 'user', 'startDate', 'endDate', 'status'];
+    this.selection = new SelectionModel<Poll>(true, []);
+
   }
 
-  url = 'https://angular-grid.herokuapp.com/getUsers'; // add your POST endpoint here later
-  /* Try https://angular-grid.herokuapp.com/getAllUsers for client side pagination */
-
-  headings: GridHeading[] = [
-    { fieldName: 'id', display: 'ID', type: 'number', width: '100px', disableSorting: true, textAlign: 'right' },
-    { fieldName: 'first_name', display: 'First Name', type: 'string', width: '120px' },
-    { fieldName: 'email', display: 'Email', type: 'string', width: '180px' },
-    {
-      fieldName: 'gender', display: 'Gender', type: 'string', width: '100px',
-      filterType: 'multi-select',
-      other: {
-        selectionMode: 'single',
-        source: 'internal',
-        optionsObject: [
-          { text: 'Female', value: 'FEMALE' },
-          { text: 'Male', value: 'MALE' }
-        ]
-      }
-    },
-    { fieldName: 'date_of_birth', display: 'Date Of Birth', type: 'date', width: '150px' }
-  ];
-
-  responseReceived(response: GridResponse): void {
-    console.log(response); // If necessary manipulate the data or use data in the parent component
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
   }
 
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: Poll): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.pollId + 1}`;
+  }
 }
