@@ -6,6 +6,7 @@ export interface Poll {
   pollStatus: String;
   startDate: String;
   endDate: String;
+  candidates: Candidate[];
 }
 
 export interface User {
@@ -16,4 +17,11 @@ export interface User {
   passwords: String;
   polls: number[];
   userName: String;
+}
+
+export interface Candidate {
+  candidateId: number;
+  candidateName: String;
+  pollId: number;
+  score: number;
 }

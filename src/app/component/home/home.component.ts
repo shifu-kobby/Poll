@@ -4,28 +4,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { Poll } from 'src/app/model';
 
-
-const ELEMENT_DATA: Poll[] = [
-  {
-    pollId: 1,
-    pollName: "name",
-    pollDescription: "description",
-    pollStatus: "status",
-    startDate: "start",
-    endDate: "end",
-    userId: {
-      userId: 1,
-      email: "user1@email.com",
-      firstName: "firstName",
-      lastName: "lastName",
-      passwords: "password",
-      polls: [1],
-      userName: "userName"
-    }
-  },
-];
-
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
