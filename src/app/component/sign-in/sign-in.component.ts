@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PollServiceService } from 'src/app/service/poll-service.service';
 
 @Component({
@@ -10,19 +11,26 @@ import { PollServiceService } from 'src/app/service/poll-service.service';
 export class SignInComponent implements OnInit {
   hide = true;
   signInFormGroup: any;
-  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService) { }
+  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private router: Router,) { }
 
   ngOnInit(): void {
     this.signInFormGroup = this._formBuilder.group({
-      email: ['', Validators.required],
+      userName: ['', Validators.required],
       passwords: ['', Validators.required],
     });
   }
 
   login(){
-    console.log(this.signInFormGroup.value);
-    this.pollService.getUserById(this.signInFormGroup.value.email, this.signInFormGroup.value.passwords)
-    .subscribe(res => console.log(res)
+    this.pollService.getUserById(this.signInFormGroup.value.userName, this.signInFormGroup.value.passwords)
+    .subscribe(res => {
+      if (res) {
+        this.router.navigate(['/home'])
+      }
+      else {
+        console.log("something went wrong");
+
+      }
+    }
     )
   }
 }

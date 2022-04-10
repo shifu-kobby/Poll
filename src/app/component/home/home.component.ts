@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numSelected = this.selection?.selected.length;
+    const numRows = this.dataSource?.data.length;
     return numSelected === numRows;
   }
 

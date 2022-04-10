@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PollServiceService } from 'src/app/service/poll-service.service';
 
 
@@ -11,7 +12,7 @@ import { PollServiceService } from 'src/app/service/poll-service.service';
 export class SignUpComponent implements OnInit {
 hide = true;
 signUpFormGroup: any;
-  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService) { }
+  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private router: Router) { }
 
   ngOnInit(): void {
     this.signUpFormGroup = this._formBuilder.group({
@@ -26,7 +27,11 @@ signUpFormGroup: any;
   signUp(){
     console.log(this.signUpFormGroup.value);
     this.pollService.userSignUp(this.signUpFormGroup.value)
-    .subscribe(res => console.log(res)
+    .subscribe(res => {
+      if (res) {
+        this.router.navigate([""])
+      }
+    }
     )
   }
 
