@@ -23,4 +23,8 @@ export class PollServiceService {
   getUserById(email: string, passwords: string){
     return this.http.get<User>(`${this.baseUrl}/user/userName/${email}/password/${passwords}`);
   }
+
+  createPoll(data: Poll) {
+    return this.http.post<Poll>(`${this.baseUrl}/poll`, data);
+  }
 }
