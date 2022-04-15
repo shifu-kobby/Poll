@@ -22,30 +22,29 @@ export class SignInComponent implements OnInit {
   )
 
   constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private router: Router,
-    private store: Store<UserState>) {}
+    private store: Store<UserState>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(userActions.Init());
-
     this.signInFormGroup = this._formBuilder.group({
       userName: ['', Validators.required],
       passwords: ['', Validators.required],
     });
-    this.user$.subscribe((res: any) => console.log(res)
-    )
   }
 
-  login(){
+  login() {
     this.pollService.getUserById(this.signInFormGroup.value.userName, this.signInFormGroup.value.passwords)
-    .subscribe(res => {
-      if (res) {
-        this.router.navigate(['/home'])
-      }
-      else {
-        console.log("something went wrong");
+      .subscribe(res => {
+        if (res) {
+          this.store.dispatch(userActions.GetCurrentUser({
+            payload: res
+          }));
+          this.router.navigate(['/home'])
+        }
+        else {
+          console.log("something went wrong");
 
+        }
       }
-    }
-    )
+      )
   }
 }

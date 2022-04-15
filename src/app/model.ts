@@ -4,7 +4,7 @@ export interface User {
   firstName: String;
   lastName: String;
   passwords: String;
-  polls: number[];
+  polls: Poll[];
   userName: String;
 }
 

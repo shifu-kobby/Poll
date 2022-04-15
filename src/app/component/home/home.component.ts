@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { PollServiceService } from 'src/app/service/poll-service.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
-import { Poll } from 'src/app/model';
+import { Poll, User } from 'src/app/model';
+import { Observable } from 'rxjs';
+import { UserState } from 'src/app/store/state/user.state';
+import { select, Store } from '@ngrx/store';
+import * as userActions from '../../store/actions/user.actions';
+import * as userSelectors from '../../store/selectors/user.selectors';
 
 @Component({
   selector: 'app-home',
@@ -11,23 +16,24 @@ import { Poll } from 'src/app/model';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private pollService: PollServiceService) { }
+  constructor(private pollService: PollServiceService, private store: Store<UserState>) { }
+
+  public readonly user$: Observable<User> | any = this.store.pipe(
+    select(userSelectors.getCurrentUser)
+  )
   polls: Poll[] | undefined;
   selection: any;
   dataSource: any;
   displayedColumns: string[] | undefined;
 
   ngOnInit(): void {
-    this.pollService.getPolls()
-      .subscribe((data: any) => {
-        console.log(data);
-        this.polls = data;
-        this.dataSource = new MatTableDataSource<Poll>(this.polls);
-      })
-
+    this.user$.subscribe((res: User) => {
+      this.polls = res.polls;
+    }
+    )
+    this.dataSource = new MatTableDataSource<Poll>(this.polls);
     this.displayedColumns = ['select', 'id', 'name', 'description', 'user', 'startDate', 'endDate', 'status'];
     this.selection = new SelectionModel<Poll>(true, []);
-
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
