@@ -5,5 +5,10 @@ export const getUserState = createFeatureSelector<UserState>(USER_FEATURE_KEY);
 
 export const getCurrentUser = createSelector(
   getUserState,
-  (state: UserState) => state.user
+  (state: UserState) => {
+      let newState = localStorage.getItem("currentUser");
+      console.log(newState? JSON.parse(newState): "");
+
+      return newState? JSON.parse(newState): state.user;
+  }
 );

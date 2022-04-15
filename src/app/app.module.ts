@@ -29,6 +29,7 @@ import { SignInComponent } from './component/sign-in/sign-in.component';
 import { StoreModule } from '@ngrx/store';
 import { reducer, userReducer } from './store/reducers/user.reducer';
 import { USER_FEATURE_KEY } from './store/state/user.state';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { USER_FEATURE_KEY } from './store/state/user.state';
     SignInComponent,
   ],
   imports: [
+    MatMenuModule,
     MatCheckboxModule,
     MatTableModule,
     ChartsModule,

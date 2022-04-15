@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/model';
@@ -21,10 +21,11 @@ export class SignInComponent implements OnInit {
     select(userSelectors.getCurrentUser)
   )
 
-  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private router: Router,
+  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private route: ActivatedRoute, private router: Router,
     private store: Store<UserState>) { }
 
   ngOnInit(): void {
+    localStorage.removeItem('currentUser');
     this.signInFormGroup = this._formBuilder.group({
       userName: ['', Validators.required],
       passwords: ['', Validators.required],
@@ -38,7 +39,13 @@ export class SignInComponent implements OnInit {
           this.store.dispatch(userActions.GetCurrentUser({
             payload: res
           }));
-          this.router.navigate(['/home'])
+          localStorage.setItem('currentUser', JSON.stringify(res));
+          this.router.navigate(['/home'], {
+            relativeTo: this.route,
+            queryParams: {
+              userName: res.userName
+            },
+            queryParamsHandling: 'merge'})
         }
         else {
           console.log("something went wrong");
