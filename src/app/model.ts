@@ -1,3 +1,13 @@
+export interface User {
+  userId: number;
+  email: String;
+  firstName: String;
+  lastName: String;
+  passwords: String;
+  polls: number[];
+  userName: String;
+}
+
 export interface Poll {
   pollId: number;
   pollName: String;
@@ -7,16 +17,6 @@ export interface Poll {
   startDate: String;
   endDate: String;
   candidates: Candidate[];
-}
-
-export interface User {
-  userId: number;
-  email: String;
-  firstName: String;
-  lastName: String;
-  passwords: String;
-  polls: number[];
-  userName: String;
 }
 
 export interface Candidate {

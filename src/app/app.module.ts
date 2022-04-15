@@ -26,6 +26,9 @@ import {MatTableModule} from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SignUpComponent } from './component/sign-up/sign-up.component';
 import { SignInComponent } from './component/sign-in/sign-in.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer, userReducer } from './store/reducers/user.reducer';
+import { USER_FEATURE_KEY } from './store/state/user.state';
 
 
 @NgModule({
@@ -61,6 +64,8 @@ import { SignInComponent } from './component/sign-in/sign-in.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature(USER_FEATURE_KEY, reducer),
   ],
   providers: [],
   bootstrap: [AppComponent]

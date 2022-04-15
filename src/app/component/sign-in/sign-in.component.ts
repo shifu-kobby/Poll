@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/model';
 import { PollServiceService } from 'src/app/service/poll-service.service';
+import { UserState } from 'src/app/store/state/user.state';
+import * as userActions from '../../store/actions/user.actions';
+import * as userSelectors from '../../store/selectors/user.selectors';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,13 +17,22 @@ import { PollServiceService } from 'src/app/service/poll-service.service';
 export class SignInComponent implements OnInit {
   hide = true;
   signInFormGroup: any;
-  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private router: Router,) { }
+  public readonly user$: Observable<User> | any = this.store.pipe(
+    select(userSelectors.getCurrentUser)
+  )
+
+  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private router: Router,
+    private store: Store<UserState>) {}
 
   ngOnInit(): void {
+    this.store.dispatch(userActions.Init());
+
     this.signInFormGroup = this._formBuilder.group({
       userName: ['', Validators.required],
       passwords: ['', Validators.required],
     });
+    this.user$.subscribe((res: any) => console.log(res)
+    )
   }
 
   login(){
