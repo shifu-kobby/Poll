@@ -21,13 +21,15 @@ export class HomeComponent implements OnInit {
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
   )
-  polls: Poll[] | undefined;
+  userName: String | undefined;
+  polls: Poll[] | any;
   selection: any;
   dataSource: any;
   displayedColumns: string[] | undefined;
 
   ngOnInit(): void {
     this.user$.subscribe((res: User) => {
+      this.userName = res.userName;
       this.polls = res.polls;
     }
     )

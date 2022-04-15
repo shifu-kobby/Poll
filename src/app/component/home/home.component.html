@@ -1,7 +1,10 @@
 <div class="home">
   <mat-card>
     <div class="homeAction">
-      <mat-card-title>Recent Polls</mat-card-title>
+      <div>
+        <mat-card-title>Welcome {{userName}} !!</mat-card-title>
+        <mat-card-subtitle>Recent Polls</mat-card-subtitle>
+      </div>
       <div>
         <a routerLink="/create">
           <button mat-raised-button class="homeCreatePoll">Create Poll</button>
@@ -12,7 +15,8 @@
       </div>
     </div>
   </mat-card>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <div *ngIf="polls.length === 0">Oops looks like we have no polls created yet. Let's create some!</div>
+  <table *ngIf="polls && polls.length > 0" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
