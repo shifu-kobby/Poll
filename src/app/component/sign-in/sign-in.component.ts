@@ -33,7 +33,7 @@ export class SignInComponent implements OnInit {
   }
 
   login() {
-    this.pollService.getUserById(this.signInFormGroup.value.userName, this.signInFormGroup.value.passwords)
+    this.pollService.authenticateUser(this.signInFormGroup.value.userName, this.signInFormGroup.value.passwords)
       .subscribe(res => {
         if (res) {
           this.store.dispatch(userActions.GetCurrentUser({
@@ -45,7 +45,8 @@ export class SignInComponent implements OnInit {
             queryParams: {
               userName: res.userName
             },
-            queryParamsHandling: 'merge'})
+            queryParamsHandling: 'merge'
+          })
         }
         else {
           console.log("something went wrong");

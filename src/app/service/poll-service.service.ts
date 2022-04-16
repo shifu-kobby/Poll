@@ -21,12 +21,20 @@ export class PollServiceService {
     return this.http.post<Poll>(`${this.baseUrl}/user`, data);
   }
 
-  getUserById(userName: string, passwords: string){
+  authenticateUser(userName: string, passwords: string) {
     return this.http.get<User>(`${this.baseUrl}/user/userName/${userName}/password/${passwords}`);
+  }
+
+  getUserById(id: number) {
+    return this.http.get<User>(`${this.baseUrl}/user/${id}`);
   }
 
   createPoll(data: Poll) {
     return this.http.post<Poll>(`${this.baseUrl}/poll`, data);
+  }
+
+  updatePoll(data: Poll, id: number) {
+    return this.http.put<Poll>(`${this.baseUrl}/poll/${id}`, data);
   }
 
   addCandidates(data: Candidate) {

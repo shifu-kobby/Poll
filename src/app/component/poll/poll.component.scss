@@ -1,19 +1,29 @@
 .poll {
   height: 600px;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // padding: 20px;
+  // max-height: 600px;
+  // min-width: 100px;
+  // background-color: white;
+  // margin: 10px;
+  // z-index: 1;
 }
 
 .pollOption {
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
-// mat-card:hover {
-//   color: hotpink;
-// }
-
-// mat-card:active {
-//   color: blue;
-// }
+.pollOptionImage {
+  max-height: 200px;
+  width: 100%;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
 
 .submitButton {
   color: white;
@@ -23,10 +33,11 @@
 ::ng-deep .pollMatCard{
   min-width: 300px;
   max-width: 400px;
-  max-height: 100px;
+  max-height: 300px;
+  margin-top: 10px;
 }
 
 .pollSubmitButton{
   text-align: center;
-  margin-top: 30px;
+  margin-top: 150px;
 }

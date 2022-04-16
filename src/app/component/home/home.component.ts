@@ -8,6 +8,7 @@ import { UserState } from 'src/app/store/state/user.state';
 import { select, Store } from '@ngrx/store';
 import * as userActions from '../../store/actions/user.actions';
 import * as userSelectors from '../../store/selectors/user.selectors';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,26 +16,30 @@ import * as userSelectors from '../../store/selectors/user.selectors';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private pollService: PollServiceService, private store: Store<UserState>) { }
-
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
   )
   userName: String | undefined;
+  password: String | undefined;
   polls: Poll[] | any;
   selection: any;
   dataSource: any;
   displayedColumns: string[] | undefined;
+  userInfo: User | any;
+
+  constructor(private pollService: PollServiceService, private store: Store<UserState>, private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.user$.subscribe((res: User) => {
-      this.userName = res.userName;
-      this.polls = res.polls;
+      this.userInfo = res;
+      this.userName = this.userInfo.userName;
+      this.password = this.userInfo.passwords;
+      this.polls = this.userInfo.polls;
     }
     )
     this.dataSource = new MatTableDataSource<Poll>(this.polls);
-    this.displayedColumns = ['select', 'id', 'name', 'description', 'user', 'startDate', 'endDate', 'status'];
+    this.displayedColumns = ['name', 'description', 'startDate', 'endDate', 'status', 'arrow', 'delete'];
     this.selection = new SelectionModel<Poll>(true, []);
   }
 
@@ -57,9 +62,45 @@ export class HomeComponent implements OnInit {
 
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: Poll): string {
+
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.pollId + 1}`;
+  }
+
+  initiatePoll(row: Poll) {
+    let tempUserInfo: any = {
+      userId: this.userInfo.userId,
+      email: this.userInfo.email,
+      firstName: this.userInfo.firstName,
+      lastName: this.userInfo.lastName,
+      userName: this.userInfo.userName,
+      passwords: this.userInfo.passwords,
+    }
+
+    let updatedPoll = { ...row, pollStatus: "IN PROGRESS", userId: tempUserInfo };
+
+    this.pollService.updatePoll(updatedPoll, row.pollId)
+      .subscribe((res: Poll) => {
+        if (res) {
+          this.pollService.getUserById(this.userInfo.userId)
+            .subscribe((res: User) => {
+              localStorage.setItem('currentUser', JSON.stringify(res));
+              this.store.dispatch(userActions.GetCurrentUser({
+                payload: res
+              }));
+            }
+            )
+        }
+      })
+    this.router.navigate(['/monitor'], {
+      relativeTo: this.route,
+      queryParams: {
+        userName: this.userName,
+        poll: row.pollName
+      },
+      queryParamsHandling: 'merge'
+    })
   }
 }
