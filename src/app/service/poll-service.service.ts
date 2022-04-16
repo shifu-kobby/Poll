@@ -17,6 +17,10 @@ export class PollServiceService {
     return this.http.get<Poll[]>(`${this.baseUrl}/poll`);
   }
 
+  getPollById(id: number) {
+    return this.http.get<Poll>(`${this.baseUrl}/poll/${id}`);
+  }
+
   userSignUp(data: User) {
     return this.http.post<Poll>(`${this.baseUrl}/user`, data);
   }
@@ -39,5 +43,9 @@ export class PollServiceService {
 
   addCandidates(data: Candidate) {
     return this.http.post<Candidate>(`${this.baseUrl}/candidate`, data);
+  }
+
+  getCandidates(data: Poll) {
+    return this.http.post<Candidate[]>(`${this.baseUrl}/candidate/id`, data);
   }
 }

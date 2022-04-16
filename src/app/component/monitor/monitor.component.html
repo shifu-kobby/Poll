@@ -9,13 +9,13 @@
       <button *ngIf=value matSuffix mat-icon-button aria-label="Clear" (click)=search()>
         <mat-icon>search</mat-icon>
       </button>
-      <div class="pie">
+      <div class="pie" *ngIf="chartDatasets">
         <canvas mdbChart [chartType]=chartType [datasets]=chartDatasets [labels]=chartLabels [colors]=chartColors
           [options]=chartOptions [legend]=true (chartHover)=chartHovered($event) (chartClick)=chartClicked($event)
           height="100">
         </canvas>
       </div>
-      <div class="bar">
+      <div class="bar" *ngIf="chartDatasets">
         <canvas mdbChart [chartType]=chartTypeBar [datasets]=chartDatasets [labels]=chartLabels [colors]=chartColors
           [options]=chartOptions [legend]=true (chartHover)=chartHovered($event) (chartClick)=chartClicked($event)
           height="100">

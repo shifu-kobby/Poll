@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
       relativeTo: this.route,
       queryParams: {
         userName: this.userName,
-        poll: row.pollName
+        pollId: row.pollId
       },
       queryParamsHandling: 'merge'
     })
