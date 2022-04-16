@@ -1,6 +1,6 @@
 <div class="nav">
   <mat-card>
-    <div class="navContent">
+    <div class="navContent"  *ngIf="userName">
       <a class="navToggle" (click)=inputSideNav.toggle()>
         <mat-icon style="font-size: 40px;">toc</mat-icon>
       </a>
