@@ -9,6 +9,8 @@
       <button *ngIf=value matSuffix mat-icon-button aria-label="Clear" (click)=search()>
         <mat-icon>search</mat-icon>
       </button>
+      <label>Click to copy</label>
+      <button mat-button [cdkCopyToClipboard]="votingLink"><mat-icon>filter_none</mat-icon></button>
       <div class="pie" *ngIf="chartDatasets">
         <canvas mdbChart [chartType]=chartType [datasets]=chartDatasets [labels]=chartLabels [colors]=chartColors
           [options]=chartOptions [legend]=true (chartHover)=chartHovered($event) (chartClick)=chartClicked($event)

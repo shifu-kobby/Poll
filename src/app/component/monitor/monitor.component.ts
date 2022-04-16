@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { baseUrl } from 'src/app/common';
 import { Candidate, Poll } from 'src/app/model';
 import { PollServiceService } from 'src/app/service/poll-service.service';
 
@@ -9,7 +10,7 @@ import { PollServiceService } from 'src/app/service/poll-service.service';
   styleUrls: ['./monitor.component.scss']
 })
 export class MonitorComponent implements OnInit {
-  value = 'Clear me';
+  value = "";
   selectedPollId: number | undefined;
   selectedPoll: Poll | any;
   candidates: Candidate[] | any;
@@ -25,15 +26,12 @@ export class MonitorComponent implements OnInit {
   chartOptions: any = {
     responsive: true
   };
+  votingLink = "";
 
   constructor(private pollService: PollServiceService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getCandidatesForPoll();
-    console.log(this.selectedPoll);
-    this.candidates = this.selectedPoll?.candidates;
-    console.log(this.candidates);
-
   }
 
   getCandidatesForPoll() {
@@ -47,7 +45,6 @@ export class MonitorComponent implements OnInit {
     if (this.selectedPollId) {
       this.pollService.getPollById(this.selectedPollId)
         .subscribe((res: Poll) => {
-          console.log(res);
           this.selectedPoll = res;
           res.candidates.forEach((candidate: Candidate) => {
             labels.push(candidate.candidateName)
@@ -55,6 +52,7 @@ export class MonitorComponent implements OnInit {
           })
           this.chartLabels = labels;
           this.chartDatasets = [{data: scores, label: res.pollName }]
+          this.votingLink = `${baseUrl}/poll?name=${res.pollName}`;
         })
     }
   }

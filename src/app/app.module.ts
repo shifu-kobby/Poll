@@ -30,6 +30,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducer, userReducer } from './store/reducers/user.reducer';
 import { USER_FEATURE_KEY } from './store/state/user.state';
 import {MatMenuModule} from '@angular/material/menu';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {MatMenuModule} from '@angular/material/menu';
     SignInComponent,
   ],
   imports: [
+    ClipboardModule,
     MatMenuModule,
     MatCheckboxModule,
     MatTableModule,
