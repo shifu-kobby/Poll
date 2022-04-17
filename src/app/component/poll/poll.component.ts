@@ -19,7 +19,8 @@ export class PollComponent implements OnInit {
   selectedPollId: Poll | any;
   poll: Poll | any;
   voteCasted: boolean = false;
-
+  pausedPoll: boolean = false;
+  stoppedPoll: boolean = false;
   constructor(private pollService: PollServiceService, private store: Store<UserState>, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -32,6 +33,8 @@ export class PollComponent implements OnInit {
       this.pollService.getPollById(this.selectedPollId)
         .subscribe((res: Poll) => {
           this.poll = res;
+          this.pausedPoll = res.pollStatus === "PAUSED"? true: false;
+          this.stoppedPoll = res.pollStatus === "FINISHED"? true: false;
           this.candidates = res?.candidates
         })
     }

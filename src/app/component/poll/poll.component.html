@@ -1,5 +1,7 @@
 <div class="poll">
-  <div *ngIf="!voteCasted">
+  <h2 *ngIf="pausedPoll">Poll is paused</h2>
+  <h2 *ngIf="stoppedPoll">Poll Ended!!</h2>
+  <div *ngIf="!voteCasted && !stoppedPoll">
     <div class="pollOption" *ngIf="candidates" >
       <div *ngFor="let candidate of candidates">
         <mat-card class="pollMatCard">
@@ -14,7 +16,7 @@
       </div>
     </div>
     <div class="pollSubmitButton">
-      <button mat-raised-button class="submitButton" (click)="vote()">Vote</button>
+      <button mat-raised-button [disabled]="pausedPoll" class="submitButton" (click)="vote()">Vote</button>
     </div>
   </div>
   <div *ngIf="voteCasted">

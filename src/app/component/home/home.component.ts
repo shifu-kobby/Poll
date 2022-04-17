@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   dataSource: any;
   displayedColumns: string[] | undefined;
   userInfo: User | any;
+  paused: boolean = false;
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
   ).subscribe((res: User) => {
@@ -32,7 +33,7 @@ export class HomeComponent implements OnInit {
     this.polls = this.userInfo.polls;
 
     this.dataSource = new MatTableDataSource<Poll>(this.polls);
-    this.displayedColumns = ['name', 'description', 'startDate', 'endDate', 'status', 'arrow', 'monitor', 'delete'];
+    this.displayedColumns = ['name', 'description', 'startDate', 'endDate', 'status', 'arrow', 'stop', 'monitor', 'delete'];
     this.selection = new SelectionModel<Poll>(true, []);
   }
   )
@@ -94,6 +95,64 @@ export class HomeComponent implements OnInit {
             )
         }
       })
+  }
+
+  pausePoll(row: Poll) {
+    let tempUserInfo: any = {
+      userId: this.userInfo.userId,
+      email: this.userInfo.email,
+      firstName: this.userInfo.firstName,
+      lastName: this.userInfo.lastName,
+      userName: this.userInfo.userName,
+      passwords: this.userInfo.passwords,
+    }
+    let updatedPoll = {...row, pollStatus: "PAUSED", userId: tempUserInfo }
+
+    this.pollService.updatePoll(updatedPoll, row.pollId)
+    .subscribe((res: Poll) => {
+      console.log(res);
+
+      if (res) {
+        this.paused = true;
+        this.pollService.getUserById(this.userInfo.userId)
+          .subscribe((res: User) => {
+            localStorage.setItem('currentUser', JSON.stringify(res));
+            this.store.dispatch(userActions.GetCurrentUser({
+              payload: res
+            }));
+          }
+          )
+      }
+    })
+  }
+
+  endPoll(row: Poll) {
+    let tempUserInfo: any = {
+      userId: this.userInfo.userId,
+      email: this.userInfo.email,
+      firstName: this.userInfo.firstName,
+      lastName: this.userInfo.lastName,
+      userName: this.userInfo.userName,
+      passwords: this.userInfo.passwords,
+    }
+    let updatedPoll = {...row, pollStatus: "FINISHED", userId: tempUserInfo }
+
+    this.pollService.updatePoll(updatedPoll, row.pollId)
+    .subscribe((res: Poll) => {
+      console.log(res);
+
+      if (res) {
+        this.paused = true;
+        this.pollService.getUserById(this.userInfo.userId)
+          .subscribe((res: User) => {
+            localStorage.setItem('currentUser', JSON.stringify(res));
+            this.store.dispatch(userActions.GetCurrentUser({
+              payload: res
+            }));
+          }
+          )
+      }
+    })
   }
 
   monitorPoll(row: Poll) {
