@@ -1,13 +1,13 @@
 <div class="poll">
-  <div class="pollOption">
+  <div class="pollOption" *ngIf="candidates" >
     <div *ngFor="let candidate of candidates">
       <mat-card class="pollMatCard">
         <mat-card-header>
-          <mat-card-title>{{candidate}}</mat-card-title>
+          <mat-card-title>{{candidate.candidateName}}</mat-card-title>
         </mat-card-header>
         <img class="pollOptionImage" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
         <mat-card-actions>
-          <button mat-button>Select</button>
+          <button mat-button (click)="vote(candidate)">Select</button>
         </mat-card-actions>
       </mat-card>
     </div>

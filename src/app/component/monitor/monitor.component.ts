@@ -39,7 +39,7 @@ export class MonitorComponent implements OnInit {
     let scores: Number[] = [];
     this.route.queryParams
       .subscribe(params => {
-        this.selectedPollId = params['pollId'];
+        this.selectedPollId = params['id'];
       }
       )
     if (this.selectedPollId) {
@@ -52,7 +52,7 @@ export class MonitorComponent implements OnInit {
           })
           this.chartLabels = labels;
           this.chartDatasets = [{data: scores, label: res.pollName }]
-          this.votingLink = `${baseUrl}/poll?name=${res.pollName}`;
+          this.votingLink = `${baseUrl}/poll?id=${res.pollId}`
         })
     }
   }

@@ -48,4 +48,8 @@ export class PollServiceService {
   getCandidates(data: Poll) {
     return this.http.post<Candidate[]>(`${this.baseUrl}/candidate/id`, data);
   }
+
+  updateCandidate(id: number, data: Candidate) {
+    return this.http.put<Candidate>(`${this.baseUrl}/candidate/${id}`, data);
+  }
 }
