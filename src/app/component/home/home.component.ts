@@ -16,9 +16,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public readonly user$: Observable<User> | any = this.store.pipe(
-    select(userSelectors.getCurrentUser)
-  )
   userName: String | undefined;
   password: String | undefined;
   polls: Poll[] | any;
@@ -26,21 +23,24 @@ export class HomeComponent implements OnInit {
   dataSource: any;
   displayedColumns: string[] | undefined;
   userInfo: User | any;
+  public readonly user$: Observable<User> | any = this.store.pipe(
+    select(userSelectors.getCurrentUser)
+  ).subscribe((res: User) => {
+    this.userInfo = res;
+    this.userName = this.userInfo.userName;
+    this.password = this.userInfo.passwords;
+    this.polls = this.userInfo.polls;
+
+    this.dataSource = new MatTableDataSource<Poll>(this.polls);
+    this.displayedColumns = ['name', 'description', 'startDate', 'endDate', 'status', 'arrow', 'monitor', 'delete'];
+    this.selection = new SelectionModel<Poll>(true, []);
+  }
+  )
 
   constructor(private pollService: PollServiceService, private store: Store<UserState>, private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.user$.subscribe((res: User) => {
-      this.userInfo = res;
-      this.userName = this.userInfo.userName;
-      this.password = this.userInfo.passwords;
-      this.polls = this.userInfo.polls;
-    }
-    )
-    this.dataSource = new MatTableDataSource<Poll>(this.polls);
-    this.displayedColumns = ['name', 'description', 'startDate', 'endDate', 'status', 'arrow', 'delete'];
-    this.selection = new SelectionModel<Poll>(true, []);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -94,6 +94,9 @@ export class HomeComponent implements OnInit {
             )
         }
       })
+  }
+
+  monitorPoll(row: Poll) {
     this.router.navigate(['/monitor'], {
       relativeTo: this.route,
       queryParams: {

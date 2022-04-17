@@ -18,14 +18,17 @@ export class ToolbarComponent implements OnInit {
   userName: String | any;
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
-  )
+  ).subscribe((res: User) => {
+    this.userName = res.userName;
+
+  })
 
   constructor(private store: Store<UserState>, private router: Router, ) { }
 
   ngOnInit(): void {
-    this.user$.subscribe((res: User) => {
-      this.userName = res.userName;
-    })
+    // this.user$.subscribe((res: User) => {
+    //   this.userName = res.userName;
+    // })
   }
 
   logOut(): void {

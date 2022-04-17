@@ -25,7 +25,6 @@ signUpFormGroup: any;
   }
 
   signUp(){
-    console.log(this.signUpFormGroup.value);
     this.pollService.userSignUp(this.signUpFormGroup.value)
     .subscribe(res => {
       if (res) {

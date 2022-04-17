@@ -7,7 +7,6 @@ export const getCurrentUser = createSelector(
   getUserState,
   (state: UserState) => {
       let newState = localStorage.getItem("currentUser");
-      console.log(newState? JSON.parse(newState): "");
 
       return newState? JSON.parse(newState): state.user;
   }

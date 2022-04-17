@@ -15,17 +15,14 @@ import * as userSelectors from '../../store/selectors/user.selectors';
 })
 export class PollComponent implements OnInit {
   candidates: Candidate[] | any;
-  public readonly user$: Observable<User> | any = this.store.pipe(
-    select(userSelectors.getCurrentUser)
-  )
+  selectedCandidate: Candidate | undefined;
   selectedPollId: Poll | any;
+  poll: Poll | any;
+  voteCasted: boolean = false;
+
   constructor(private pollService: PollServiceService, private store: Store<UserState>, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getCandidatesForPoll();
-  }
-
-  getCandidatesForPoll() {
     this.route.queryParams
       .subscribe(params => {
         this.selectedPollId = params['id'];
@@ -34,20 +31,34 @@ export class PollComponent implements OnInit {
     if (this.selectedPollId) {
       this.pollService.getPollById(this.selectedPollId)
         .subscribe((res: Poll) => {
-          console.log(res);
+          this.poll = res;
           this.candidates = res?.candidates
-          console.log(this.candidates);
-
         })
     }
   }
 
-  vote(candidate: Candidate) {
-    let updatedCandidate = {...candidate, score: candidate.score + 1}
-    console.log(updatedCandidate);
+  select(candidate: Candidate) {
+    this.selectedCandidate = candidate;
+  }
 
-    // this.pollService.updateCandidate(updatedCandidate.candidateId, updatedCandidate)
-    // .subscribe((res: Candidate) => console.log(res)
-    // )
+  vote() {
+    let tempPoll = this.poll;
+    delete tempPoll.userId;
+
+    if (this.selectedCandidate) {
+      let updatedCandidate = {
+        ...this.selectedCandidate,
+        score: this.selectedCandidate.score + 1,
+        pollId: tempPoll
+      }
+
+      this.pollService.updateCandidate(updatedCandidate.candidateId, updatedCandidate)
+        .subscribe((res: Candidate) => {
+          if (res) {
+            console.log('candidate updated successfully');
+            this.voteCasted = true;
+          }
+        })
+    }
   }
 }

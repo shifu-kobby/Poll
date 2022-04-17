@@ -1,18 +1,23 @@
 <div class="poll">
-  <div class="pollOption" *ngIf="candidates" >
-    <div *ngFor="let candidate of candidates">
-      <mat-card class="pollMatCard">
-        <mat-card-header>
-          <mat-card-title>{{candidate.candidateName}}</mat-card-title>
-        </mat-card-header>
-        <img class="pollOptionImage" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        <mat-card-actions>
-          <button mat-button (click)="vote(candidate)">Select</button>
-        </mat-card-actions>
-      </mat-card>
+  <div *ngIf="!voteCasted">
+    <div class="pollOption" *ngIf="candidates" >
+      <div *ngFor="let candidate of candidates">
+        <mat-card class="pollMatCard">
+          <mat-card-header>
+            <mat-card-title>{{candidate.candidateName}}</mat-card-title>
+          </mat-card-header>
+          <img class="pollOptionImage" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <mat-card-actions>
+            <button mat-button (click)="select(candidate)">Select</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    <div class="pollSubmitButton">
+      <button mat-raised-button class="submitButton" (click)="vote()">Vote</button>
     </div>
   </div>
-  <div class="pollSubmitButton">
-    <button mat-raised-button class="submitButton">Vote</button>
+  <div *ngIf="voteCasted">
+    Your response has been submitted!
   </div>
 </div>

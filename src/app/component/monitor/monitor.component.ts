@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { baseUrl } from 'src/app/common';
-import { Candidate, Poll } from 'src/app/model';
+import { Candidate, Poll, User } from 'src/app/model';
 import { PollServiceService } from 'src/app/service/poll-service.service';
+import { select, Store } from '@ngrx/store';
+import * as userActions from '../../store/actions/user.actions';
+import * as userSelectors from '../../store/selectors/user.selectors';
+import { UserState } from 'src/app/store/state/user.state';
 
 @Component({
   selector: 'app-monitor',
@@ -16,6 +21,8 @@ export class MonitorComponent implements OnInit {
   candidates: Candidate[] | any;
   chartDatasets: any;
   chartLabels: string[] | any;
+  chartType = 'pie';
+  chartTypeBar = 'bar';
   chartColors = [
     {
       backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
@@ -27,14 +34,10 @@ export class MonitorComponent implements OnInit {
     responsive: true
   };
   votingLink = "";
-
-  constructor(private pollService: PollServiceService, private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    this.getCandidatesForPoll();
-  }
-
-  getCandidatesForPoll() {
+  polls: Poll[] | any;
+  public readonly user$: Observable<User> | any = this.store.pipe(
+    select(userSelectors.getCurrentUser)
+  ).subscribe((res: User) => {
     let labels: String[] = [];
     let scores: Number[] = [];
     this.route.queryParams
@@ -44,25 +47,28 @@ export class MonitorComponent implements OnInit {
       )
     if (this.selectedPollId) {
       this.pollService.getPollById(this.selectedPollId)
-        .subscribe((res: Poll) => {
+        .subscribe((poll: Poll) => {
           this.selectedPoll = res;
-          res.candidates.forEach((candidate: Candidate) => {
+          poll.candidates.forEach((candidate: Candidate) => {
             labels.push(candidate.candidateName)
             scores.push(candidate.score)
           })
           this.chartLabels = labels;
-          this.chartDatasets = [{data: scores, label: res.pollName }]
-          this.votingLink = `${baseUrl}/poll?id=${res.pollId}`
+          this.chartDatasets = [{ data: scores, label: poll.pollName }]
+          this.votingLink = `${baseUrl}/poll?id=${poll.pollId}`
         })
     }
+  })
+
+  constructor(private pollService: PollServiceService, private route: ActivatedRoute, private store: Store<UserState>) { }
+
+  ngOnInit(): void {
+    console.log(this.polls);
   }
+
   search() {
     console.log(this.value);
   }
-  chartType = 'pie';
-  chartTypeBar = 'bar';
-
-
 
   chartClicked(event: any): void {
     console.log(event);
