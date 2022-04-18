@@ -165,4 +165,41 @@ export class HomeComponent implements OnInit {
       queryParamsHandling: 'merge'
     })
   }
+
+  deletePoll(row: Poll) {
+    // this.polls.forEach((poll: Poll, i: number) => {
+    //   if(poll.pollId === row.pollId) {
+    //     console.log(i);
+    //     this.polls.splice(i, 1);
+    //   }
+    // });
+    console.log(this.polls);
+    console.log(row);
+
+
+    // let tempUserInfo = {
+    //   ...this.userInfo,
+    //   polls: this.polls
+    // }
+    // console.log(tempUserInfo);
+
+    // this.pollService.deletePoll(row.pollId);
+    // .subscribe((status) => {
+    //   console.log(status);
+
+    //   if(status){
+    //     console.log('here');
+
+    //     this.pollService.getUserById(this.userInfo.userId)
+    //     .subscribe((res: User) => {
+    //       localStorage.setItem('currentUser', JSON.stringify(res));
+    //       this.store.dispatch(userActions.GetCurrentUser({
+    //         payload: res
+    //       }));
+    //     }
+    //     )
+    //   }
+    // })
+
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Candidate, Poll, User } from 'src/app/model';
@@ -19,11 +20,13 @@ export class CreateComponent implements OnInit {
   pollData: Poll | any;
   candidateData: Candidate[] | any = [];
   currentUser: User | any;
+  submitted: boolean= false;
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
   )
 
-  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private store: Store<UserState>) { }
+  constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private store: Store<UserState>,
+    private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const today = new Date();
@@ -82,19 +85,41 @@ export class CreateComponent implements OnInit {
     })
 
     this.pollService.createPoll(this.pollData)
-      .subscribe(res => {
-        if (res) {
+      .subscribe(poll => {
+        if (poll) {
           this.candidateData.forEach((candidate: { pollId: Poll; }) => {
-            candidate.pollId = res
+            candidate.pollId = poll
           })
 
           this.candidateData.map((candidate: Candidate) => {
             this.pollService.addCandidates(candidate)
-              .subscribe(res => console.log(res)
+              .subscribe(res => {
+                if(res){
+                  this.submitted = true;
+                  this.pollService.getUserById(poll.userId.userId)
+                      .subscribe((res: User) => {
+                        localStorage.setItem('currentUser', JSON.stringify(res));
+                        this.store.dispatch(userActions.GetCurrentUser({
+                          payload: res
+                        }));
+                      }
+                      )
+                }
+              }
               )
           })
         }
       }
       )
+  }
+
+  navigateToMonitor(){
+    this.router.navigate(['/home'], {
+      relativeTo: this.route,
+      queryParams: {
+        userName: this.currentUser.userName,
+      },
+      queryParamsHandling: 'merge'
+    })
   }
 }

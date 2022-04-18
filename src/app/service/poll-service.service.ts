@@ -41,6 +41,11 @@ export class PollServiceService {
     return this.http.put<Poll>(`${this.baseUrl}/poll/${id}`, data);
   }
 
+  deletePoll(id: number){
+    console.log("delete");
+    return this.http.delete<String>(`${this.baseUrl}/poll/${id}`);
+  }
+
   addCandidates(data: Candidate) {
     return this.http.post<Candidate>(`${this.baseUrl}/candidate`, data);
   }
