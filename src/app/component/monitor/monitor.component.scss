@@ -4,10 +4,14 @@
 
 .pie {
   display: block;
+  height: 400px;
+  width: 400px;
 }
 
 .bar {
   display: block;
+  height: 400px;
+  width: 400px;
 }
 
 textarea {
@@ -37,4 +41,34 @@ textarea {
 
 .pollName {
   text-align: center;
+}
+
+.monitorHeading {
+  text-align: center;
+}
+
+.monitorActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: 200px;
+  max-width: 250px;
+}
+
+.thumbUp {
+  color: green;
+}
+
+.charts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.monitorContent {
+  height: 400px;
+}
+
+.clipboard {
+  margin-left: 10px;
 }

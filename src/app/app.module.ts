@@ -31,6 +31,8 @@ import { reducer, userReducer } from './store/reducers/user.reducer';
 import { USER_FEATURE_KEY } from './store/state/user.state';
 import {MatMenuModule} from '@angular/material/menu';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
     SignInComponent,
   ],
   imports: [
+    MatProgressSpinnerModule,
+    MatTooltipModule,
     ClipboardModule,
     MatMenuModule,
     MatCheckboxModule,

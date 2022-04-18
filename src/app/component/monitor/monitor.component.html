@@ -1,40 +1,46 @@
 <div class="monitor">
-  <h2>Monitor Polls</h2>
+  <h2 class="monitorHeading">Monitor Poll</h2>
   <div>
-    <mat-card>
-      <mat-form-field>
-        <mat-label>Search poll</mat-label>
-        <input matInput type="text" [(ngModel)]=value>
-      </mat-form-field>
-      <button *ngIf=value matSuffix mat-icon-button aria-label="Clear" (click)=search()>
-        <mat-icon>search</mat-icon>
-      </button>
-      <label>Click to copy</label>
-      <button mat-button [cdkCopyToClipboard]="votingLink">
+    <div class="monitorActions">
+      <button mat-raised-button class="clipboard" [cdkCopyToClipboard]="votingLink"
+        matTooltip="Click to copy voting link to clipboard">
         <mat-icon>filter_none</mat-icon>
       </button>
-      <button mat-button class="play" *ngIf="(selectedPoll?.pollStatus === 'PENDING' || 'PAUSED') && selectedPoll?.pollStatus !== 'IN PROGRESS'" (click)="initiatePoll()">
+      <button mat-raised-button class="play" matTooltip="click to start poll"
+        *ngIf="(selectedPoll?.pollStatus === 'PENDING' || 'PAUSED') && selectedPoll?.pollStatus !== 'IN PROGRESS'"
+        (click)="initiatePoll()">
         <mat-icon>play_arrow</mat-icon>
       </button>
-      <button mat-button class="pause" *ngIf="selectedPoll?.pollStatus === 'IN PROGRESS'" (click)="pausePoll()">
+      <button mat-raised-button matTooltip="click to pause poll" class="pause"
+        *ngIf="selectedPoll?.pollStatus === 'IN PROGRESS'" (click)="pausePoll()">
         <mat-icon>pause</mat-icon>
       </button>
-      <button mat-button class="stop" [disabled]="selectedPoll?.pollStatus === 'PENDING' || selectedPoll?.pollStatus === 'FINISHED'" (click)="endPoll()">
+      <button mat-raised-button matTooltip="click to stop poll" class="stop"
+        [disabled]="selectedPoll?.pollStatus === 'PENDING' || selectedPoll?.pollStatus === 'FINISHED'"
+        (click)="endPoll()">
         <mat-icon>stop</mat-icon>
       </button>
-      <h2 class="pollName">{{selectedPoll?.pollName}}</h2>
-      <div class="pie" *ngIf="chartDatasets">
-        <canvas mdbChart [chartType]=chartType [datasets]=chartDatasets [labels]=chartLabels [colors]=chartColors
-          [options]=chartOptions [legend]=true (chartHover)=chartHovered($event) (chartClick)=chartClicked($event)
-          height="100">
-        </canvas>
-      </div>
-      <div class="bar" *ngIf="chartDatasets">
-        <canvas mdbChart [chartType]=chartTypeBar [datasets]=chartDatasets [labels]=chartLabels [colors]=chartColors
-          [options]=chartOptions [legend]=true (chartHover)=chartHovered($event) (chartClick)=chartClicked($event)
-          height="100">
-        </canvas>
-      </div>
-    </mat-card>
+      <mat-spinner *ngIf="selectedPoll?.pollStatus === 'IN PROGRESS'" diameter="30"></mat-spinner>
+      <mat-icon *ngIf="selectedPoll.pollStatus === 'FINISHED'" class="thumbUp">thumb_up</mat-icon>
+    </div>
+    <h2 class="pollName">{{selectedPoll?.pollName}}</h2>
+    <div class="charts">
+      <mat-card>
+        <div class="pie" *ngIf="chartDatasets">
+          <canvas mdbChart [chartType]=chartType [datasets]=chartDatasets [labels]=chartLabels [colors]=chartColors
+            [options]=chartOptions [legend]=true (chartHover)=chartHovered($event) (chartClick)=chartClicked($event)
+            height="100">
+          </canvas>
+        </div>
+      </mat-card>
+      <mat-card>
+        <div class="bar" *ngIf="chartDatasets">
+          <canvas mdbChart [chartType]=chartTypeBar [datasets]=chartDatasets [labels]=chartLabels [colors]=chartColors
+            [options]=chartOptions [legend]=true (chartHover)=chartHovered($event) (chartClick)=chartClicked($event)
+            height="100">
+          </canvas>
+        </div>
+      </mat-card>
+    </div>
   </div>
 </div>

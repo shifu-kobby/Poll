@@ -31,7 +31,8 @@ export class MonitorComponent implements OnInit {
     }
   ];
   chartOptions: any = {
-    responsive: true
+    responsive: true,
+    maintainAspectRatio: false
   };
   votingLink = "";
   polls: Poll[] | any;

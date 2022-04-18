@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
     this.polls = this.userInfo.polls;
 
     this.dataSource = new MatTableDataSource<Poll>(this.polls);
-    this.displayedColumns = ['name', 'description', 'startDate', 'endDate', 'status', 'arrow', 'stop', 'monitor', 'delete'];
+    this.displayedColumns = ['name', 'description', 'startDate', 'endDate', 'status', 'arrow', 'stop', 'monitor', 'delete', 'spinner'];
     this.selection = new SelectionModel<Poll>(true, []);
   }
   )
