@@ -10,7 +10,19 @@
         <mat-icon>search</mat-icon>
       </button>
       <label>Click to copy</label>
-      <button mat-button [cdkCopyToClipboard]="votingLink"><mat-icon>filter_none</mat-icon></button>
+      <button mat-button [cdkCopyToClipboard]="votingLink">
+        <mat-icon>filter_none</mat-icon>
+      </button>
+      <button mat-button class="play" *ngIf="(selectedPoll?.pollStatus === 'PENDING' || 'PAUSED') && selectedPoll?.pollStatus !== 'IN PROGRESS'" (click)="initiatePoll()">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button mat-button class="pause" *ngIf="selectedPoll?.pollStatus === 'IN PROGRESS'" (click)="pausePoll()">
+        <mat-icon>pause</mat-icon>
+      </button>
+      <button mat-button class="stop" [disabled]="selectedPoll?.pollStatus === 'PENDING' || selectedPoll?.pollStatus === 'FINISHED'" (click)="endPoll()">
+        <mat-icon>stop</mat-icon>
+      </button>
+      <h2 class="pollName">{{selectedPoll?.pollName}}</h2>
       <div class="pie" *ngIf="chartDatasets">
         <canvas mdbChart [chartType]=chartType [datasets]=chartDatasets [labels]=chartLabels [colors]=chartColors
           [options]=chartOptions [legend]=true (chartHover)=chartHovered($event) (chartClick)=chartClicked($event)

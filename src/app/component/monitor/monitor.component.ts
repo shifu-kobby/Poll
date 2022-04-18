@@ -35,9 +35,11 @@ export class MonitorComponent implements OnInit {
   };
   votingLink = "";
   polls: Poll[] | any;
+  userInfo: User | any;
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
   ).subscribe((res: User) => {
+    this.userInfo = res;
     let labels: String[] = [];
     let scores: Number[] = [];
     this.route.queryParams
@@ -48,7 +50,7 @@ export class MonitorComponent implements OnInit {
     if (this.selectedPollId) {
       this.pollService.getPollById(this.selectedPollId)
         .subscribe((poll: Poll) => {
-          this.selectedPoll = res;
+          this.selectedPoll = poll;
           poll.candidates.forEach((candidate: Candidate) => {
             labels.push(candidate.candidateName)
             scores.push(candidate.score)
@@ -63,7 +65,6 @@ export class MonitorComponent implements OnInit {
   constructor(private pollService: PollServiceService, private route: ActivatedRoute, private store: Store<UserState>) { }
 
   ngOnInit(): void {
-    console.log(this.polls);
   }
 
   search() {
@@ -76,6 +77,92 @@ export class MonitorComponent implements OnInit {
 
   chartHovered(event: any): void {
     console.log(event);
+  }
+
+  initiatePoll() {
+    let tempUserInfo: any = {
+      userId: this.userInfo.userId,
+      email: this.userInfo.email,
+      firstName: this.userInfo.firstName,
+      lastName: this.userInfo.lastName,
+      userName: this.userInfo.userName,
+      passwords: this.userInfo.passwords,
+    }
+
+    let updatedPoll = { ...this.selectedPoll, pollStatus: "IN PROGRESS", userId: tempUserInfo };
+    console.log(this.selectedPoll);
+
+    console.log(updatedPoll);
+
+    this.pollService.updatePoll(updatedPoll, this.selectedPoll.pollId)
+      .subscribe((res: Poll) => {
+        if (res) {
+          this.pollService.getUserById(this.userInfo.userId)
+            .subscribe((res: User) => {
+              localStorage.setItem('currentUser', JSON.stringify(res));
+              this.store.dispatch(userActions.GetCurrentUser({
+                payload: res
+              }));
+            }
+            )
+        }
+      })
+  }
+
+  pausePoll() {
+    let tempUserInfo: any = {
+      userId: this.userInfo.userId,
+      email: this.userInfo.email,
+      firstName: this.userInfo.firstName,
+      lastName: this.userInfo.lastName,
+      userName: this.userInfo.userName,
+      passwords: this.userInfo.passwords,
+    }
+    let updatedPoll = { ...this.selectedPoll, pollStatus: "PAUSED", userId: tempUserInfo }
+
+    this.pollService.updatePoll(updatedPoll, this.selectedPoll.pollId)
+      .subscribe((res: Poll) => {
+        console.log(res);
+
+        if (res) {
+          this.pollService.getUserById(this.userInfo.userId)
+            .subscribe((res: User) => {
+              localStorage.setItem('currentUser', JSON.stringify(res));
+              this.store.dispatch(userActions.GetCurrentUser({
+                payload: res
+              }));
+            }
+            )
+        }
+      })
+  }
+
+  endPoll() {
+    let tempUserInfo: any = {
+      userId: this.userInfo.userId,
+      email: this.userInfo.email,
+      firstName: this.userInfo.firstName,
+      lastName: this.userInfo.lastName,
+      userName: this.userInfo.userName,
+      passwords: this.userInfo.passwords,
+    }
+    let updatedPoll = { ...this.selectedPoll, pollStatus: "FINISHED", userId: tempUserInfo }
+
+    this.pollService.updatePoll(updatedPoll, this.selectedPoll.pollId)
+      .subscribe((res: Poll) => {
+        console.log(res);
+
+        if (res) {
+          this.pollService.getUserById(this.userInfo.userId)
+            .subscribe((res: User) => {
+              localStorage.setItem('currentUser', JSON.stringify(res));
+              this.store.dispatch(userActions.GetCurrentUser({
+                payload: res
+              }));
+            }
+            )
+        }
+      })
   }
 
 }

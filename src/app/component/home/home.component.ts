@@ -106,24 +106,24 @@ export class HomeComponent implements OnInit {
       userName: this.userInfo.userName,
       passwords: this.userInfo.passwords,
     }
-    let updatedPoll = {...row, pollStatus: "PAUSED", userId: tempUserInfo }
+    let updatedPoll = { ...row, pollStatus: "PAUSED", userId: tempUserInfo }
 
     this.pollService.updatePoll(updatedPoll, row.pollId)
-    .subscribe((res: Poll) => {
-      console.log(res);
+      .subscribe((res: Poll) => {
+        console.log(res);
 
-      if (res) {
-        this.paused = true;
-        this.pollService.getUserById(this.userInfo.userId)
-          .subscribe((res: User) => {
-            localStorage.setItem('currentUser', JSON.stringify(res));
-            this.store.dispatch(userActions.GetCurrentUser({
-              payload: res
-            }));
-          }
-          )
-      }
-    })
+        if (res) {
+          this.paused = true;
+          this.pollService.getUserById(this.userInfo.userId)
+            .subscribe((res: User) => {
+              localStorage.setItem('currentUser', JSON.stringify(res));
+              this.store.dispatch(userActions.GetCurrentUser({
+                payload: res
+              }));
+            }
+            )
+        }
+      })
   }
 
   endPoll(row: Poll) {
@@ -135,24 +135,24 @@ export class HomeComponent implements OnInit {
       userName: this.userInfo.userName,
       passwords: this.userInfo.passwords,
     }
-    let updatedPoll = {...row, pollStatus: "FINISHED", userId: tempUserInfo }
+    let updatedPoll = { ...row, pollStatus: "FINISHED", userId: tempUserInfo }
 
     this.pollService.updatePoll(updatedPoll, row.pollId)
-    .subscribe((res: Poll) => {
-      console.log(res);
+      .subscribe((res: Poll) => {
+        console.log(res);
 
-      if (res) {
-        this.paused = true;
-        this.pollService.getUserById(this.userInfo.userId)
-          .subscribe((res: User) => {
-            localStorage.setItem('currentUser', JSON.stringify(res));
-            this.store.dispatch(userActions.GetCurrentUser({
-              payload: res
-            }));
-          }
-          )
-      }
-    })
+        if (res) {
+          this.paused = true;
+          this.pollService.getUserById(this.userInfo.userId)
+            .subscribe((res: User) => {
+              localStorage.setItem('currentUser', JSON.stringify(res));
+              this.store.dispatch(userActions.GetCurrentUser({
+                payload: res
+              }));
+            }
+            )
+        }
+      })
   }
 
   monitorPoll(row: Poll) {
