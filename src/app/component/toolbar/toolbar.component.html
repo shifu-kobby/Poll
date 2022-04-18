@@ -5,10 +5,10 @@
         <mat-icon style="font-size: 40px;">toc</mat-icon>
       </a>
       <div class="navDetails">
-        <div>{{userName}}</div>
-        <button mat-button [matMenuTriggerFor]="menu">
+        <span class="userName">{{userName}}</span>
+        <a [matMenuTriggerFor]="menu">
           <mat-icon class="user">account_circle</mat-icon>
-        </button>
+        </a>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logOut()">Log Out</button>
         </mat-menu>
