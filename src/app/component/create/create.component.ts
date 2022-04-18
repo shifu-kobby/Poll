@@ -20,7 +20,7 @@ export class CreateComponent implements OnInit {
   pollData: Poll | any;
   candidateData: Candidate[] | any = [];
   currentUser: User | any;
-  submitted: boolean= false;
+  submitted: boolean = false;
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
   )
@@ -30,6 +30,7 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     const today = new Date();
+    const day = today.getDate();
     const month = today.getMonth();
     const year = today.getFullYear();
 
@@ -37,8 +38,8 @@ export class CreateComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
       candidates: this._formBuilder.array([]),
-      start: [new Date(year, month, 1), Validators.required],
-      end: [new Date(year, month, 5), Validators.required],
+      start: [new Date(year, month, day), Validators.required],
+      end: [new Date(year, month, day), Validators.required],
     });
     this.user$.subscribe((res: User) => {
       this.currentUser = res;
@@ -64,13 +65,18 @@ export class CreateComponent implements OnInit {
     this.candidates().removeAt(i);
   }
 
+  convertToTimestamp(date: Date) {
+    console.log(date.getTime());
+    return date.getTime();
+  }
+
   submit() {
     this.pollData = {
       "pollName": this.pollCreateForm.value.name,
       "pollDescription": this.pollCreateForm.value.description,
       "pollStatus": "PENDING",
-      "startDate": this.pollCreateForm.value.start,
-      "endDate": this.pollCreateForm.value.end,
+      "startDate": this.convertToTimestamp(this.pollCreateForm.value.start),
+      "endDate": this.convertToTimestamp(this.pollCreateForm.value.end),
       "userId": this.currentUser
     }
 
@@ -94,16 +100,16 @@ export class CreateComponent implements OnInit {
           this.candidateData.map((candidate: Candidate) => {
             this.pollService.addCandidates(candidate)
               .subscribe(res => {
-                if(res){
+                if (res) {
                   this.submitted = true;
                   this.pollService.getUserById(poll.userId.userId)
-                      .subscribe((res: User) => {
-                        localStorage.setItem('currentUser', JSON.stringify(res));
-                        this.store.dispatch(userActions.GetCurrentUser({
-                          payload: res
-                        }));
-                      }
-                      )
+                    .subscribe((res: User) => {
+                      localStorage.setItem('currentUser', JSON.stringify(res));
+                      this.store.dispatch(userActions.GetCurrentUser({
+                        payload: res
+                      }));
+                    }
+                    )
                 }
               }
               )
@@ -113,7 +119,7 @@ export class CreateComponent implements OnInit {
       )
   }
 
-  navigateToMonitor(){
+  navigateToMonitor() {
     this.router.navigate(['/home'], {
       relativeTo: this.route,
       queryParams: {

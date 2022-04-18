@@ -68,8 +68,12 @@
               {{ candidate.candidate }},&nbsp;
             </div>
           </mat-list-item>
-          <mat-list-item> <strong>Poll Duration:</strong> {{ this.pollCreateForm.value.start }} - {{
-            this.pollCreateForm.value.end }}</mat-list-item>
+          <mat-list-item> <strong>Poll Duration:
+            </strong> {{ this.pollCreateForm.value.start?.getDate() }}/{{this.pollCreateForm.value.start?.getMonth()
+            }}/{{
+            this.pollCreateForm.value.start?.getFullYear() }} -
+            {{ this.pollCreateForm.value.end?.getDate() }}/{{this.pollCreateForm.value.end?.getMonth() }}/{{
+            this.pollCreateForm.value.end?.getFullYear() }}</mat-list-item>
         </mat-list>
         <div>
           <button mat-button matStepperPrevious>Back</button>
@@ -81,7 +85,8 @@
 
   </mat-card>
   <div *ngIf="submitted" class="successMessage">
-    <h2>Poll Created Successfully!!. Click <button mat-raised-button class="navButton" (click)="navigateToMonitor()">view polls</button> to monitor poll</h2>
+    <h2>Poll Created Successfully!!. Click <button mat-raised-button class="navButton"
+        (click)="navigateToMonitor()">view polls</button> to monitor poll</h2>
   </div>
 
 </div>
