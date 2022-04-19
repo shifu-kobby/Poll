@@ -70,6 +70,11 @@ export class HomeComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.pollId + 1}`;
   }
 
+  convertToDate(timestamp: any) {
+    let date = new Date(Number(timestamp));
+    return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+  }
+
   initiatePoll(row: Poll) {
     let tempUserInfo: any = {
       userId: this.userInfo.userId,

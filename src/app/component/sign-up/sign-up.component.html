@@ -1,6 +1,6 @@
 <div class="signUp">
   <mat-card class="signUpContent">
-    <mat-card-title>Personal Information</mat-card-title>
+    <mat-card-title>Sign Up</mat-card-title>
     <mat-card-content class="signUpDetails">
       <form [formGroup]=signUpFormGroup>
         <mat-form-field>
@@ -30,8 +30,9 @@
       </form>
     </mat-card-content>
     <mat-card-actions>
+      <div class="signIn">Already have an account? <a routerLink="/sign-in">Log in</a></div>
       <button mat-raised-button class="button" (click)=signUp()>Sign Up</button>
-      <button mat-raised-button class="button" routerLink="/sign-in">Login</button>
+      <!-- <button mat-raised-button class="button" routerLink="/sign-in">Login</button> -->
     </mat-card-actions>
   </mat-card>
 </div>

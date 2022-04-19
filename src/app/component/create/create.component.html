@@ -69,10 +69,10 @@
             </div>
           </mat-list-item>
           <mat-list-item> <strong>Poll Duration:
-            </strong> {{ this.pollCreateForm.value.start?.getDate() }}/{{this.pollCreateForm.value.start?.getMonth()
+            </strong> {{ this.pollCreateForm.value.start?.getDate() }}/{{this.pollCreateForm.value.start?.getMonth()+1
             }}/{{
             this.pollCreateForm.value.start?.getFullYear() }} -
-            {{ this.pollCreateForm.value.end?.getDate() }}/{{this.pollCreateForm.value.end?.getMonth() }}/{{
+            {{ this.pollCreateForm.value.end?.getDate() }}/{{this.pollCreateForm.value.end?.getMonth()+1 }}/{{
             this.pollCreateForm.value.end?.getFullYear() }}</mat-list-item>
         </mat-list>
         <div>
