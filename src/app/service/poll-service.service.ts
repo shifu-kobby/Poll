@@ -11,7 +11,7 @@ export class PollServiceService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = "http://localhost:8080/api";
+  baseUrl = "https://poll-mysql-db.herokuapp.com/api";
 
   getPolls() {
     return this.http.get<Poll[]>(`${this.baseUrl}/poll`);

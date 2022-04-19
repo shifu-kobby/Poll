@@ -21,7 +21,7 @@
         <mat-icon>stop</mat-icon>
       </button>
       <mat-spinner *ngIf="selectedPoll?.pollStatus === 'IN PROGRESS'" diameter="30"></mat-spinner>
-      <mat-icon *ngIf="selectedPoll.pollStatus === 'FINISHED'" class="thumbUp">thumb_up</mat-icon>
+      <mat-icon *ngIf="selectedPoll?.pollStatus === 'FINISHED'" class="thumbUp">thumb_up</mat-icon>
     </div>
     <h2 class="pollName">{{selectedPoll?.pollName}}</h2>
     <div class="charts">

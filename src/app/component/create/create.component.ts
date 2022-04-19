@@ -93,11 +93,15 @@ export class CreateComponent implements OnInit {
     this.pollService.createPoll(this.pollData)
       .subscribe(poll => {
         if (poll) {
+          console.log(this.candidateData);
+
           this.candidateData.forEach((candidate: { pollId: Poll; }) => {
             candidate.pollId = poll
           })
 
           this.candidateData.map((candidate: Candidate) => {
+            console.log(candidate);
+
             this.pollService.addCandidates(candidate)
               .subscribe(res => {
                 if (res) {
