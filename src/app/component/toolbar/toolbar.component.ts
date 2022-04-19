@@ -15,12 +15,12 @@ import * as userSelectors from '../../store/selectors/user.selectors';
 })
 export class ToolbarComponent implements OnInit {
   @Input() inputSideNav: any;
+  toggleVal: boolean = false;
   userName: String | any;
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
   ).subscribe((res: User) => {
     this.userName = res.userName;
-
   })
 
   constructor(private store: Store<UserState>, private router: Router, ) { }
@@ -31,11 +31,20 @@ export class ToolbarComponent implements OnInit {
     // })
   }
 
+  toggle(): void {
+    this.inputSideNav.toggle();
+    this.toggleVal = !this.toggleVal;
+
+  }
+
   logOut(): void {
     localStorage.removeItem('currentUser');
     this.store.dispatch(userActions.GetCurrentUser({
       payload: initialUserState.user
     }));
+    if (this.toggleVal == true) {
+      this.inputSideNav.toggle();
+    }
     this.router.navigate(['/sign-in']);
   }
 
