@@ -17,6 +17,7 @@ import * as userSelectors from '../../store/selectors/user.selectors';
 export class SignInComponent implements OnInit {
   hide = true;
   signInFormGroup: any;
+  clicked: boolean = false;
   public readonly user$: Observable<User> | any = this.store.pipe(
     select(userSelectors.getCurrentUser)
   )
@@ -33,6 +34,7 @@ export class SignInComponent implements OnInit {
   }
 
   login() {
+    this.clicked = true;
     this.pollService.authenticateUser(this.signInFormGroup.value.userName, this.signInFormGroup.value.passwords)
       .subscribe(res => {
         if (res) {

@@ -19,7 +19,8 @@
     </mat-card-content>
     <mat-card-actions>
       <div class="signUp">Create an account <a routerLink="/sign-up">here</a></div>
-      <button mat-raised-button class="Button" (click)=login()>Login</button>
+      <button *ngIf="!clicked" mat-raised-button class="Button" (click)=login()>Login</button>
+      <div align="center" *ngIf="clicked" class="spinner"><mat-spinner  diameter="30"></mat-spinner></div>
     </mat-card-actions>
   </mat-card>
 </div>

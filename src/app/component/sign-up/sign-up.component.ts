@@ -12,6 +12,7 @@ import { PollServiceService } from 'src/app/service/poll-service.service';
 export class SignUpComponent implements OnInit {
 hide = true;
 signUpFormGroup: any;
+signedUp: boolean = false;
   constructor(private _formBuilder: FormBuilder, private pollService: PollServiceService, private router: Router) { }
 
   ngOnInit(): void {
@@ -28,6 +29,7 @@ signUpFormGroup: any;
     this.pollService.userSignUp(this.signUpFormGroup.value)
     .subscribe(res => {
       if (res) {
+        this.signedUp = true;
         this.router.navigate([""])
       }
     }

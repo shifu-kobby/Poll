@@ -21,6 +21,7 @@ export class PollComponent implements OnInit {
   voteCasted: boolean = false;
   pausedPoll: boolean = false;
   stoppedPoll: boolean = false;
+  selectionMade: boolean = false;
   constructor(private pollService: PollServiceService, private store: Store<UserState>, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -42,6 +43,7 @@ export class PollComponent implements OnInit {
 
   select(candidate: Candidate) {
     this.selectedCandidate = candidate;
+    this.selectionMade = true;
   }
 
   vote() {

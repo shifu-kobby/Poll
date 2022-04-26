@@ -12,7 +12,9 @@
       </div>
     </div>
   </mat-card>
-  <div *ngIf="polls.length === 0">Oops looks like we have no polls created yet. Let's create some!</div>
+  <div class="noPolls" *ngIf="polls.length === 0">
+    <img class = "image" src="../../assets/empy-illustration.jpg"/>
+    <h2>You have no polls, Let's create some!</h2></div>
   <table *ngIf="polls && polls.length > 0" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- <ng-container matColumnDef="select">
